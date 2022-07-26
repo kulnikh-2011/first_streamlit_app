@@ -30,7 +30,11 @@ streamlit.dataframe(fruit_show)
 
 streamlit.header('Fruityvice Fruit Advice')
 
+
+new_fruit = streamlit.text_input('Which fruit would you like to add')
+
 def insert_row_snowflake(new_fruit):
   with my_cnx.cursor as my_cur:
     my_cur.execute("insert into fruit_load_list values ('"+new_fruit+"')")
     return "Thanks fro adding "+ new_fruit
+ 
