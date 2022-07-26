@@ -16,7 +16,7 @@ streamlit.text('🥑 🍞 Avocado Toast')
 
 
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
-my_cur.execute("insert into  fruit_load_list values ('from streamlit')")
+
 
 my_fruit_list = pd.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
 my_fruit_list = my_fruit_list.set_index('Fruit')
@@ -24,7 +24,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 
 fruit_selected =streamlit.multiselect('Pick Some Fruits:',list(my_fruit_list.index),['Avocado','Strawberries'])
 fruit_show = my_fruit_list.loc[fruit_selected]
-my_cur.execute("insert into  fruit_load_list values ('from streamlit')")
+
 
 streamlit.dataframe(fruit_show)
 
@@ -53,13 +53,14 @@ my_data_row = my_cur.fetchall()
 
 streamlit.text("The Fruit Load List contains:")
 def get_fruit_load_list():
-  #with my_cnx.cursor() as my_cur:
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  my_cur = my_cnx.cursor()
   my_cur.execute('select * from from fruit_load_list')
   return my_cur.fetchall()
 
 # Add a button to fetch the details:
 if streamlit.button('Get Fruit Load List'):
-  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  #my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
   my_data_row = get_fruit_load_list()
   streamlit.dataframe(my_data_row)
 #streamlit.text(my_data_row)
