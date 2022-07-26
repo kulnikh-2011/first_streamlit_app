@@ -53,9 +53,9 @@ my_data_row = my_cur.fetchall()
 
 streamlit.text("The Fruit Load List contains:")
 def get_fruit_load_list():
-  with my_cnx.cursor as my_cur
-  my_cur.execute('select * from from fruit_load_list')
-  return my_cur.fetchall()
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute('select * from from fruit_load_list')
+    return my_cur.fetchall()
 
 # Add a button to fetch the details:
 if streamlit.button('Get Fruit Load List'):
